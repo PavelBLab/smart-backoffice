@@ -2,7 +2,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.quarkus.testcase2</groupId>
-    <artifactId>smart-backoffice</artifactId>
+    <artifactId>smartbar-backoffice</artifactId>
     <version>1.0.0-SNAPSHOT</version>
 
     <properties>
@@ -15,6 +15,8 @@
         <quarkus.platform.version>3.15.1</quarkus.platform.version>
         <skipITs>true</skipITs>
         <surefire-plugin.version>3.3.1</surefire-plugin.version>
+        <openapi-generator-maven-plugin.version>7.8.0</openapi-generator-maven-plugin.version>
+        <lombok.version>1.18.34</lombok.version>
     </properties>
 
     <dependencyManagement>
@@ -26,27 +28,49 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok.version}</version>
+                <scope>provided</scope>
+                <optional>true</optional>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
     <dependencies>
         <dependency>
             <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-resteasy-jackson</artifactId>
+            <artifactId>quarkus-rest-jackson</artifactId>
         </dependency>
+
         <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-arc</artifactId>
         </dependency>
+
         <dependency>
             <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-resteasy</artifactId>
+            <artifactId>quarkus-rest</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-hibernate-validator</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-junit5</artifactId>
             <scope>test</scope>
         </dependency>
+
         <dependency>
             <groupId>io.rest-assured</groupId>
             <artifactId>rest-assured</artifactId>
@@ -89,6 +113,71 @@
                     </systemPropertyVariables>
                 </configuration>
             </plugin>
+
+            <plugin>
+                <groupId>org.openapitools</groupId>
+                <artifactId>openapi-generator-maven-plugin</artifactId>
+                <version>${openapi-generator-maven-plugin.version}</version>
+                <inherited>false</inherited>
+                <executions>
+
+                    <!-- Execution for generating Markdown documentation -->
+                    <execution>
+                        <id>generate-markdown-docs</id>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+
+                        <configuration>
+                            <inputSpec>${project.basedir}/src/main/resources/openapi/provider/backoffice-openapi.yml</inputSpec>
+                            <generatorName>markdown</generatorName>
+                            <output>${project.build.directory}/generated-docs</output>
+                            <configOptions>
+                                <additionalMarkdownHeader>## Additional Information</additionalMarkdownHeader> <!-- Custom header for extra information -->
+                                <generateReadme>true</generateReadme> <!-- Generate README.md file -->
+                                <usePathAsName>false</usePathAsName> <!-- Use path as name for the endpoints -->
+                                <useTags>true</useTags> <!-- Use tags for grouping endpoints -->
+                            </configOptions>
+                        </configuration>
+                    </execution>
+
+                    <!-- Execution for generating Spring code -->
+                    <execution>
+                        <id>gGenerate JAX-RS server-api-stubs</id>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+
+                        <configuration>
+                            <inputSpec>${project.basedir}/src/main/resources/openapi/provider/backoffice-openapi.yml</inputSpec>
+                            <generatorName>jaxrs-spec</generatorName>
+                            <apiPackage>com.quarkus.smartbackoffice.provider.controllers</apiPackage>
+                            <modelPackage>com.quarkus.smartbackoffice.provider.models</modelPackage>
+                            <configOptions>
+                                <sourceFolder>src/main/java</sourceFolder>
+                                <useJakartaEe>true</useJakartaEe>
+                                <useSwaggerAnnotations>false</useSwaggerAnnotations>
+
+                                <immutableModels>true</immutableModels>
+                                <useBeanValidation>true</useBeanValidation>
+                                <performBeanValidation>true</performBeanValidation>
+                                <interfaceOnly>true</interfaceOnly>
+                                <skipDefaultInterface>true</skipDefaultInterface>
+                                <validateSpec>false</validateSpec>
+                                <useTags>true</useTags>
+                                <returnResponse>true</returnResponse>
+                                <additionalModelTypeAnnotations>
+                                    @lombok.experimental.SuperBuilder
+                                    @lombok.NoArgsConstructor
+                                    @lombok.Data
+                                    @lombok.extern.jackson.Jacksonized
+                                </additionalModelTypeAnnotations>
+                            </configOptions>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
             <plugin>
                 <artifactId>maven-failsafe-plugin</artifactId>
                 <version>${surefire-plugin.version}</version>

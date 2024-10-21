@@ -1,0 +1,289 @@
+openapi: 3.0.0
+info:
+  title: Smartbar Backoffice
+  version: 1.0.0
+  description: API for managing categories, articles, and tables in the Smartbar backoffice.
+
+tags:
+  - name: categories
+    description: Endpoints related to managing categories
+  - name: articles
+    description: Endpoints related to managing articles
+  - name: tables
+    description: Endpoints related to managing tables
+
+paths:
+
+  /categories:
+    get:
+      summary: Retrieve a list of categories
+      tags:
+        - categories
+      responses:
+        200:
+          description: List of categories
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/category"
+    post:
+      summary: Create a new category
+      tags:
+        - categories
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/category"
+      responses:
+        201:
+          description: Category created successfully
+          headers:
+            Location:
+              description: URL of the created category
+              schema:
+                type: string
+
+  /categories/{categoryId}:
+    parameters:
+      - name: categoryId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The ID of the category
+    get:
+      summary: Retrieve a category by ID
+      tags:
+        - categories
+      responses:
+        200:
+          description: Category details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/category"
+    put:
+      summary: Update an existing category
+      tags:
+        - categories
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/category"
+      responses:
+        200:
+          description: Category updated successfully
+    delete:
+      summary: Delete a category
+      tags:
+        - categories
+      responses:
+        200:
+          description: Category deleted successfully
+
+  /articles:
+    get:
+      summary: Retrieve a list of articles
+      tags:
+        - articles
+      responses:
+        200:
+          description: List of articles
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/article"
+    post:
+      summary: Create a new article
+      tags:
+        - articles
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/article"
+      responses:
+        201:
+          description: Article created successfully
+          headers:
+            Location:
+              description: URL of the created article
+              schema:
+                type: string
+
+  /articles/{articleId}:
+    parameters:
+      - name: articleId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The ID of the article
+    get:
+      summary: Retrieve an article by ID
+      tags:
+        - articles
+      responses:
+        200:
+          description: Article details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/article"
+    put:
+      summary: Update an existing article
+      tags:
+        - articles
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/article"
+      responses:
+        200:
+          description: Article updated successfully
+    delete:
+      summary: Delete an article
+      tags:
+        - articles
+      responses:
+        200:
+          description: Article deleted successfully
+
+  /tables:
+    get:
+      summary: Retrieve a list of tables
+      tags:
+        - tables
+      responses:
+        200:
+          description: List of tables
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/table"
+    post:
+      summary: Create a new table
+      tags:
+        - tables
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/table"
+      responses:
+        201:
+          description: Table created successfully
+          headers:
+            Location:
+              description: URL of the created table
+              schema:
+                type: string
+
+  /tables/{tableId}:
+    parameters:
+      - name: tableId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The ID of the table
+    get:
+      summary: Retrieve a table by ID
+      tags:
+        - tables
+      responses:
+        200:
+          description: Table details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/table"
+    put:
+      summary: Update an existing table
+      tags:
+        - tables
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/table"
+      responses:
+        200:
+          description: Table updated successfully
+    delete:
+      summary: Delete a table
+      tags:
+        - tables
+      responses:
+        200:
+          description: Table deleted successfully
+
+
+components:
+
+  schemas:
+    category:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+          description: The name of the category
+        description:
+          type: string
+          description: A description of the category
+
+    article:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+          description: The name of the article
+        price:
+          type: number
+          description: The price of the article
+        description:
+          type: string
+          description: A description of the article
+        picture:
+          type: string
+          description: URL to the picture of the article
+
+    table:
+      type: object
+      properties:
+        id:
+          type: string
+        number:
+          type: integer
+          description: The table number
+        seats:
+          type: integer
+          description: Number of seats at the table
+
+  responses:
+    201:
+      description: Created successfully
+      headers:
+        Location:
+          description: URL of the created resource
+          schema:
+            type: string
