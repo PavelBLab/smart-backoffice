@@ -1,24 +1,27 @@
 package com.quarkus.smartbackoffice.controllers;
 
+import com.quarkus.smartbackoffice.provider.models.Category;
+import com.quarkus.smartbackoffice.services.CategoryService;
+import io.quarkus.test.InjectMock;
+import io.quarkus.test.junit.QuarkusTest;
 import lombok.val;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class CategoryControllerTest {
+@QuarkusTest
+class CategoryControllerTest {
 
-    @Test
-    void categoriesCategoryIdDelete() {
-    }
+    @InjectMock
+    CategoryService categoryServiceMock;
 
-    @Test
-    void categoriesCategoryIdGet() {
-    }
-
-    @Test
-    void categoriesCategoryIdPut() {
+    @BeforeEach
+    void setup() {
+        Mockito.when(categoryServiceMock.categoryIdGet(null))
+                .thenReturn(Category.builder().name("drinks-test").build());
     }
 
     @Test
@@ -32,7 +35,19 @@ public class CategoryControllerTest {
 
         val jsonPath = response.jsonPath();
 
-        assertEquals("drinks", jsonPath.getString("[0].name"));
+        assertEquals("drinks-test", jsonPath.getString("[0].name"));
+    }
+
+    @Test
+    void categoriesCategoryIdDelete() {
+    }
+
+    @Test
+    void categoriesCategoryIdGet() {
+    }
+
+    @Test
+    void categoriesCategoryIdPut() {
     }
 
     @Test

@@ -2,20 +2,24 @@ package com.quarkus.smartbackoffice.controllers;
 
 import com.quarkus.smartbackoffice.provider.controllers.CategoriesApi;
 import com.quarkus.smartbackoffice.provider.models.Category;
+import com.quarkus.smartbackoffice.services.CategoryService;
 import io.smallrye.common.annotation.NonBlocking;
+import jakarta.inject.Inject;
 import jakarta.ws.rs.core.Response;
-import lombok.RequiredArgsConstructor;
 
 import java.net.URI;
 import java.util.List;
 
-@RequiredArgsConstructor
 @NonBlocking
 public class CategoryController implements CategoriesApi {
 
 
-    private final Category category = Category.builder().name("drinks").build();
+    private final CategoryService categoryService;
 
+    @Inject
+    public CategoryController(CategoryService categoryService) {
+        this.categoryService = categoryService;
+    }
 
     @Override
     public Response categoriesCategoryIdDelete(final String categoryId) {
@@ -24,7 +28,7 @@ public class CategoryController implements CategoriesApi {
 
     @Override
     public Response categoriesCategoryIdGet(final String categoryId) {
-        return Response.ok(category).build();
+        return Response.ok(categoryService.categoryIdGet(categoryId)).build();
     }
 
     @Override
@@ -34,7 +38,7 @@ public class CategoryController implements CategoriesApi {
 
     @Override
     public Response categoriesGet() {
-        return Response.ok(List.of(category)).build();
+        return Response.ok(List.of(categoryService.categoryIdGet(null))).build();
     }
 
     @Override

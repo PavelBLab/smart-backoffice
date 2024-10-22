@@ -2,18 +2,23 @@ package com.quarkus.smartbackoffice.controllers;
 
 import com.quarkus.smartbackoffice.provider.controllers.ArticlesApi;
 import com.quarkus.smartbackoffice.provider.models.Article;
+import com.quarkus.smartbackoffice.services.ArticleService;
 import io.smallrye.common.annotation.NonBlocking;
+import jakarta.inject.Inject;
 import jakarta.ws.rs.core.Response;
-import lombok.RequiredArgsConstructor;
 
 import java.net.URI;
 import java.util.List;
 
-@RequiredArgsConstructor
 @NonBlocking
 public class ArticleController implements ArticlesApi {
 
-    private final Article article = Article.builder().name("articles").build();
+    private final ArticleService articleService;
+
+    @Inject
+    public ArticleController(ArticleService articleService) {
+        this.articleService = articleService;
+    }
 
     @Override
     public Response articlesArticleIdDelete(final String articleId) {
@@ -22,7 +27,7 @@ public class ArticleController implements ArticlesApi {
 
     @Override
     public Response articlesArticleIdGet(final String articleId) {
-        return Response.ok(article).build();
+        return Response.ok(articleService.articleIdGet(articleId)).build();
     }
 
     @Override
@@ -32,7 +37,7 @@ public class ArticleController implements ArticlesApi {
 
     @Override
     public Response articlesGet() {
-        return Response.ok(List.of(article)).build();
+        return Response.ok(List.of(articleService.articleIdGet(null))).build();
     }
 
     @Override
