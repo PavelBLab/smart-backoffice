@@ -16,6 +16,7 @@ paths:
 
   /categories:
     get:
+      operationId: allCategories
       summary: Retrieve a list of categories
       tags:
         - categories
@@ -27,8 +28,10 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/category"
+                  $ref: "#/components/schemas/generatedCategory"
+    
     post:
+      operationId: createCategory
       summary: Create a new category
       tags:
         - categories
@@ -37,7 +40,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/category"
+              $ref: "#/components/schemas/generatedCategory"
       responses:
         201:
           description: Category created successfully
@@ -47,15 +50,12 @@ paths:
               schema:
                 type: string
 
-  /categories/{categoryId}:
-    parameters:
-      - name: categoryId
-        in: path
-        required: true
-        schema:
-          type: string
-        description: The ID of the category
+  /categories/{id}:
+    parameters: 
+      - $ref: '#/components/parameters/id'
+    
     get:
+      operationId: oneCategory
       summary: Retrieve a category by ID
       tags:
         - categories
@@ -65,8 +65,10 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/category"
+                $ref: "#/components/schemas/generatedCategory"
+    
     put:
+      operationId: updateCategory
       summary: Update an existing category
       tags:
         - categories
@@ -75,11 +77,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/category"
+              $ref: "#/components/schemas/generatedCategory"
       responses:
         200:
           description: Category updated successfully
+    
     delete:
+      operationId: deleteCategory
       summary: Delete a category
       tags:
         - categories
@@ -87,8 +91,10 @@ paths:
         200:
           description: Category deleted successfully
 
+
   /articles:
     get:
+      operationId: allArticles
       summary: Retrieve a list of articles
       tags:
         - articles
@@ -100,17 +106,26 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/article"
+                  $ref: "#/components/schemas/generatedArticle"
+    
     post:
+      operationId: createArticle
       summary: Create a new article
       tags:
         - articles
+      parameters:
+        - name: x-category-id
+          in: header
+          required: true
+          schema:
+            type: integer
+            format: int64
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/article"
+              $ref: "#/components/schemas/generatedArticle"
       responses:
         201:
           description: Article created successfully
@@ -120,15 +135,13 @@ paths:
               schema:
                 type: string
 
-  /articles/{articleId}:
-    parameters:
-      - name: articleId
-        in: path
-        required: true
-        schema:
-          type: string
-        description: The ID of the article
+  
+  /articles/{id}:
+    parameters: 
+      - $ref: '#/components/parameters/id'
+    
     get:
+      operationId: oneArticle
       summary: Retrieve an article by ID
       tags:
         - articles
@@ -138,8 +151,10 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/article"
+                $ref: "#/components/schemas/generatedArticle"
+    
     put:
+      operationId: updateArticle
       summary: Update an existing article
       tags:
         - articles
@@ -148,11 +163,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/article"
+              $ref: "#/components/schemas/generatedArticle"
       responses:
         200:
           description: Article updated successfully
+    
     delete:
+      operationId: deleteArticle
       summary: Delete an article
       tags:
         - articles
@@ -160,8 +177,10 @@ paths:
         200:
           description: Article deleted successfully
 
+  
   /tables:
     get:
+      operationId: allTables
       summary: Retrieve a list of tables
       tags:
         - tables
@@ -173,8 +192,10 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/table"
+                  $ref: "#/components/schemas/generatedTable"
+    
     post:
+      operationId: createTable
       summary: Create a new table
       tags:
         - tables
@@ -183,7 +204,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/table"
+              $ref: "#/components/schemas/generatedTable"
       responses:
         201:
           description: Table created successfully
@@ -193,15 +214,12 @@ paths:
               schema:
                 type: string
 
-  /tables/{tableId}:
-    parameters:
-      - name: tableId
-        in: path
-        required: true
-        schema:
-          type: string
-        description: The ID of the table
+  /tables/{id}:
+    parameters: 
+      - $ref: '#/components/parameters/id'
+    
     get:
+      operationId: oneTable
       summary: Retrieve a table by ID
       tags:
         - tables
@@ -211,8 +229,10 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/table"
+                $ref: "#/components/schemas/generatedTable"
+    
     put:
+      operationId: updateTable
       summary: Update an existing table
       tags:
         - tables
@@ -221,11 +241,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/table"
+              $ref: "#/components/schemas/generatedTable"
       responses:
         200:
           description: Table updated successfully
+    
     delete:
+      operationId: deleteTable
       summary: Delete a table
       tags:
         - tables
@@ -236,12 +258,24 @@ paths:
 
 components:
 
+  parameters:
+    id:
+      name: id
+      in: path
+      required: true
+      description: Unique ID
+      schema:
+        type: integer
+        format: int64
+
+
   schemas:
-    category:
+    generatedCategory:
       type: object
       properties:
         id:
-          type: string
+          type: integer
+          format: int64
         name:
           type: string
           description: The name of the category
@@ -249,11 +283,12 @@ components:
           type: string
           description: A description of the category
 
-    article:
+    generatedArticle:
       type: object
       properties:
         id:
-          type: string
+          type: integer
+          format: int64
         name:
           type: string
           description: The name of the article
@@ -267,17 +302,21 @@ components:
           type: string
           description: URL to the picture of the article
 
-    table:
+    generatedTable:
       type: object
       properties:
         id:
-          type: string
-        number:
           type: integer
-          description: The table number
-        seats:
+          format: int64
+        name:
+          type: string
+          description: Table name
+        seatCount:
           type: integer
           description: Number of seats at the table
+        active:
+          type: boolean
+          description: Table status
 
   responses:
     201:

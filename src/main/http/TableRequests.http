@@ -1,3 +1,10 @@
+### Get all
+GET {{url}}/tables
+
+### Get single
+GET {{url}}/tables/3000
+
+
 ### Create new
 POST {{url}}/tables
 Content-Type: application/json
@@ -17,12 +24,6 @@ Content-Type: application/json
   "seatCount": 10,
   "active": true
 }
-
-### Get all
-GET {{url}}/tables
-
-### Get single
-GET {{url}}/tables/3000
 
 ### Delete
 DELETE {{url}}/tables/1

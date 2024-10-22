@@ -1,7 +1,7 @@
 package com.quarkus.smartbackoffice.controllers;
 
 import com.quarkus.smartbackoffice.provider.controllers.CategoriesApi;
-import com.quarkus.smartbackoffice.provider.models.Category;
+import com.quarkus.smartbackoffice.provider.models.GeneratedCategory;
 import com.quarkus.smartbackoffice.services.CategoryService;
 import io.smallrye.common.annotation.NonBlocking;
 import jakarta.inject.Inject;
@@ -22,27 +22,27 @@ public class CategoryController implements CategoriesApi {
     }
 
     @Override
-    public Response categoriesCategoryIdDelete(final String categoryId) {
+    public Response deleteCategory(final Long categoryId) {
         return Response.ok().build();
     }
 
     @Override
-    public Response categoriesCategoryIdGet(final String categoryId) {
-        return Response.ok(categoryService.categoryIdGet(categoryId)).build();
+    public Response oneCategory(final Long categoryId) {
+        return Response.ok(categoryService.oneCategory(categoryId)).build();
     }
 
     @Override
-    public Response categoriesCategoryIdPut(final String categoryId, final Category category) {
+    public Response updateCategory(final Long categoryId, final GeneratedCategory category) {
         return Response.ok().build();
     }
 
     @Override
-    public Response categoriesGet() {
-        return Response.ok(List.of(categoryService.categoryIdGet(null))).build();
+    public Response allCategories() {
+        return Response.ok(List.of(categoryService.oneCategory(null))).build();
     }
 
     @Override
-    public Response categoriesPost(final Category category) {
+    public Response createCategory(final GeneratedCategory category) {
         return Response.created(URI.create("todo")).build();
     }
 }

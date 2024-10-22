@@ -1,7 +1,7 @@
 package com.quarkus.smartbackoffice.controllers;
 
 import com.quarkus.smartbackoffice.provider.controllers.ArticlesApi;
-import com.quarkus.smartbackoffice.provider.models.Article;
+import com.quarkus.smartbackoffice.provider.models.GeneratedArticle;
 import com.quarkus.smartbackoffice.services.ArticleService;
 import io.smallrye.common.annotation.NonBlocking;
 import jakarta.inject.Inject;
@@ -21,27 +21,27 @@ public class ArticleController implements ArticlesApi {
     }
 
     @Override
-    public Response articlesArticleIdDelete(final String articleId) {
+    public Response deleteArticle(final Long articleId) {
         return Response.ok().build();
     }
 
     @Override
-    public Response articlesArticleIdGet(final String articleId) {
-        return Response.ok(articleService.articleIdGet(articleId)).build();
+    public Response oneArticle(final Long articleId) {
+        return Response.ok(articleService.oneArticle(articleId)).build();
     }
 
     @Override
-    public Response articlesArticleIdPut(final String articleId, final Article article) {
+    public Response updateArticle(final Long articleId, final GeneratedArticle article) {
         return Response.ok().build();
     }
 
     @Override
-    public Response articlesGet() {
-        return Response.ok(List.of(articleService.articleIdGet(null))).build();
+    public Response allArticles() {
+        return Response.ok(List.of(articleService.oneArticle(null))).build();
     }
 
     @Override
-    public Response articlesPost(final Article article) {
+    public Response createArticle(Long xCategoryId, final GeneratedArticle article) {
         return Response.created(URI.create("todo")).build();
     }
 }
