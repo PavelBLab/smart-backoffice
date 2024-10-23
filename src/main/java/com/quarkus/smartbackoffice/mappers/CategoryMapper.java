@@ -2,19 +2,18 @@ package com.quarkus.smartbackoffice.mappers;
 
 import com.quarkus.smartbackoffice.persistence.entity.Category;
 import com.quarkus.smartbackoffice.provider.models.CategoryDto;
-import org.mapstruct.IterableMapping;
-import org.mapstruct.Mapper;
-import org.mapstruct.Named;
+import org.mapstruct.*;
 
 import java.util.List;
 
-@Mapper(componentModel = "cdi")
+@Mapper(componentModel = MappingConstants.ComponentModel.CDI)
 public interface CategoryMapper {
 
     @IterableMapping(qualifiedByName = "mapToCategoryDto")
     List<CategoryDto> mapToCategoryDtos(final List<Category> categories);
 
     @Named("mapToCategoryDto")
+    @Mapping(target = "id", ignore = true)
     CategoryDto mapToCategoryDto(final Category category);
 
     @IterableMapping(qualifiedByName = "mapToCategory")

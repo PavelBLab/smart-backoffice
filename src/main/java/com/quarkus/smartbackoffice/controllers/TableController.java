@@ -3,7 +3,7 @@ package com.quarkus.smartbackoffice.controllers;
 import com.quarkus.smartbackoffice.provider.controllers.TablesApi;
 import com.quarkus.smartbackoffice.provider.models.TableDto;
 import com.quarkus.smartbackoffice.services.TableService;
-import jakarta.inject.Inject;
+import io.smallrye.common.annotation.NonBlocking;
 import jakarta.ws.rs.core.Response;
 import lombok.RequiredArgsConstructor;
 import lombok.val;
@@ -12,7 +12,7 @@ import java.net.URI;
 import java.util.List;
 
 @RequiredArgsConstructor
-// @NonBlocking
+//@NonBlocking
 public class TableController implements TablesApi {
 
     private final TableService tableService;

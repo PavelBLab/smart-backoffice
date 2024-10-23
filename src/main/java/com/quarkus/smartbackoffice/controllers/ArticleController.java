@@ -13,7 +13,7 @@ import java.net.URI;
 import java.util.List;
 
 @RequiredArgsConstructor
-@NonBlocking
+//@NonBlocking
 public class ArticleController implements ArticlesApi {
 
     private final ArticleService articleService;
