@@ -28,7 +28,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/generatedCategory"
+                  $ref: "#/components/schemas/categoryDto"
     
     post:
       operationId: createCategory
@@ -40,7 +40,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/generatedCategory"
+              $ref: "#/components/schemas/categoryDto"
       responses:
         201:
           description: Category created successfully
@@ -65,7 +65,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/generatedCategory"
+                $ref: "#/components/schemas/categoryDto"
     
     put:
       operationId: updateCategory
@@ -77,7 +77,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/generatedCategory"
+              $ref: "#/components/schemas/categoryDto"
       responses:
         200:
           description: Category updated successfully
@@ -106,7 +106,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/generatedArticle"
+                  $ref: "#/components/schemas/articleDto"
     
     post:
       operationId: createArticle
@@ -125,7 +125,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/generatedArticle"
+              $ref: "#/components/schemas/articleDto"
       responses:
         201:
           description: Article created successfully
@@ -151,7 +151,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/generatedArticle"
+                $ref: "#/components/schemas/articleDto"
     
     put:
       operationId: updateArticle
@@ -163,7 +163,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/generatedArticle"
+              $ref: "#/components/schemas/articleDto"
       responses:
         200:
           description: Article updated successfully
@@ -192,7 +192,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/generatedTable"
+                  $ref: "#/components/schemas/tableDto"
     
     post:
       operationId: createTable
@@ -204,7 +204,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/generatedTable"
+              $ref: "#/components/schemas/tableDto"
       responses:
         201:
           description: Table created successfully
@@ -229,7 +229,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/generatedTable"
+                $ref: "#/components/schemas/tableDto"
     
     put:
       operationId: updateTable
@@ -241,7 +241,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/generatedTable"
+              $ref: "#/components/schemas/tableDto"
       responses:
         200:
           description: Table updated successfully
@@ -270,7 +270,7 @@ components:
 
 
   schemas:
-    generatedCategory:
+    categoryDto:
       type: object
       properties:
         id:
@@ -283,7 +283,7 @@ components:
           type: string
           description: A description of the category
 
-    generatedArticle:
+    articleDto:
       type: object
       properties:
         id:
@@ -302,7 +302,7 @@ components:
           type: string
           description: URL to the picture of the article
 
-    generatedTable:
+    tableDto:
       type: object
       properties:
         id:

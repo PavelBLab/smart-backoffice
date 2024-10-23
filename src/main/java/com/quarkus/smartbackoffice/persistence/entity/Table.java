@@ -9,7 +9,7 @@ import lombok.*;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@jakarta.persistence.Table(name = "BACKOFFICE_TABLE")
+@jakarta.persistence.Table(name = "BACKOFFICE_TABLES")
 public class Table extends BaseEntity{
 
     private String name;

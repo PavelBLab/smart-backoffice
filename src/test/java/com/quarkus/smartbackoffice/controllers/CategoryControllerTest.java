@@ -1,6 +1,6 @@
 package com.quarkus.smartbackoffice.controllers;
 
-import com.quarkus.smartbackoffice.provider.models.GeneratedCategory;
+import com.quarkus.smartbackoffice.provider.models.CategoryDto;
 import com.quarkus.smartbackoffice.services.CategoryService;
 import io.quarkus.test.InjectMock;
 import io.quarkus.test.junit.QuarkusTest;
@@ -21,7 +21,7 @@ class CategoryControllerTest {
     @BeforeEach
     void setup() {
         Mockito.when(categoryServiceMock.oneCategory(null))
-                .thenReturn(GeneratedCategory.builder().name("drinks-test").build());
+                .thenReturn(CategoryDto.builder().name("drinks-test").build());
     }
 
     @Test
