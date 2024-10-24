@@ -6,12 +6,12 @@ GET {{url}}/tables/3000
 
 
 ### Create new
-POST {{url}}/tables
+POST  http://0.0.0.0:9000/tables
 Content-Type: application/json
 
 {
-  "name": "Madrid",
-  "seatCount": 4,
+  "name": "Berlin",
+  "seatCount": 3,
   "active": false
 }
 

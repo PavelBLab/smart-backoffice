@@ -3,16 +3,19 @@ package com.quarkus.smartbackoffice.controllers;
 import com.quarkus.smartbackoffice.provider.controllers.TablesApi;
 import com.quarkus.smartbackoffice.provider.models.TableDto;
 import com.quarkus.smartbackoffice.services.TableService;
-import io.smallrye.common.annotation.NonBlocking;
+import jakarta.ws.rs.Path;
 import jakarta.ws.rs.core.Response;
 import lombok.RequiredArgsConstructor;
 import lombok.val;
+import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 
 import java.net.URI;
 import java.util.List;
 
 @RequiredArgsConstructor
 //@NonBlocking
+@Path("/tables")
+@Tag(name = "Tables", description = "Endpoints related to managing tables")
 public class TableController implements TablesApi {
 
     private final TableService tableService;

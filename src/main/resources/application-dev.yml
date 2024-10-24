@@ -1,0 +1,16 @@
+quarkus:
+  http:
+    port: 7777
+
+  datasource:
+    username: postgres
+    password: postgres
+    jdbc:
+       url: jdbc:postgresql://localhost:5431/smartbar-backoffice
+
+  hibernate-orm:
+    database:
+      generation: drop-and-create
+
+  smallrye-openapi:
+    enable: true

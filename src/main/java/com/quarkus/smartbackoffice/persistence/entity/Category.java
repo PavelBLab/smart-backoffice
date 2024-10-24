@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "BACKOFFICE_CATEGORIES")
+@Table(name = "backoffice_categories")
 public class Category extends BaseEntity{
 
     private String name;

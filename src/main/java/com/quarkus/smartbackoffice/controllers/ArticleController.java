@@ -5,15 +5,19 @@ import com.quarkus.smartbackoffice.provider.models.ArticleDto;
 import com.quarkus.smartbackoffice.services.ArticleService;
 import io.smallrye.common.annotation.NonBlocking;
 import jakarta.inject.Inject;
+import jakarta.ws.rs.Path;
 import jakarta.ws.rs.core.Response;
 import lombok.RequiredArgsConstructor;
 import lombok.val;
+import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 
 import java.net.URI;
 import java.util.List;
 
 @RequiredArgsConstructor
 //@NonBlocking
+@Path("/articles")
+@Tag(name = "Articles", description = "Endpoints related to managing articles")
 public class ArticleController implements ArticlesApi {
 
     private final ArticleService articleService;

@@ -5,15 +5,19 @@ import com.quarkus.smartbackoffice.provider.models.CategoryDto;
 import com.quarkus.smartbackoffice.services.CategoryService;
 import io.smallrye.common.annotation.NonBlocking;
 import jakarta.inject.Inject;
+import jakarta.ws.rs.Path;
 import jakarta.ws.rs.core.Response;
 import lombok.RequiredArgsConstructor;
 import lombok.val;
+import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 
 import java.net.URI;
 import java.util.List;
 
 @RequiredArgsConstructor
 //@NonBlocking
+@Path("/categories")
+@Tag(name = "Categories", description = "Endpoints related to managing categories")
 public class CategoryController implements CategoriesApi {
 
     private final CategoryService categoryService;

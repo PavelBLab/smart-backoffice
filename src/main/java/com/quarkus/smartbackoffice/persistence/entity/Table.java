@@ -12,7 +12,7 @@ import lombok.*;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@jakarta.persistence.Table(name = "BACKOFFICE_TABLES", uniqueConstraints = {
+@jakarta.persistence.Table(name = "backoffice_tables", uniqueConstraints = {
         @UniqueConstraint(columnNames = "name")
 })
 public class Table extends BaseEntity{
