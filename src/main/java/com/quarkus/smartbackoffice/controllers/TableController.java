@@ -6,6 +6,7 @@ import com.quarkus.smartbackoffice.services.TableService;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.core.Response;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 
@@ -14,6 +15,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 //@NonBlocking
+@Slf4j
 @Path("/tables")
 @Tag(name = "Tables", description = "Endpoints related to managing tables")
 public class TableController implements TablesApi {
@@ -22,17 +24,21 @@ public class TableController implements TablesApi {
 
     @Override
     public Response allTables() {
+        log.info("Returns all tables");
         return Response.ok(List.of(tableService.allTables())).build();
     }
 
     @Override
     public Response oneTable(final Long tableId) {
-        return Response.ok(tableService.oneTable(tableId)).build();
+        val table = tableService.oneTable(tableId);
+        log.info("Returns a table with tableId: " + table.getId());
+        return Response.ok(table).build();
     }
 
     @Override
     public Response createTable(final TableDto tableDto) {
         val persistedTable = tableService.createTable(tableDto);
+        log.info("Creates a table with name: " + tableDto.getName());
         return Response.created(URI.create("/tables/" + persistedTable.getId())).build();
     }
 
@@ -43,7 +49,9 @@ public class TableController implements TablesApi {
 
     @Override
     public Response deleteTable(final Long tableId) {
-        return Response.ok().build();
+        tableService.deleteTable(tableId);
+        log.info("Deletes a table with tableId: " + tableId);
+        return Response.noContent().build();
     }
 
 }

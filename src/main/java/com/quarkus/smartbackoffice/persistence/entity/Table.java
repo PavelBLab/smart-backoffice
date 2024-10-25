@@ -1,6 +1,7 @@
 package com.quarkus.smartbackoffice.persistence.entity;
 
 
+import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.UniqueConstraint;
@@ -15,7 +16,7 @@ import lombok.*;
 @jakarta.persistence.Table(name = "backoffice_tables", uniqueConstraints = {
         @UniqueConstraint(columnNames = "name")
 })
-public class Table extends BaseEntity{
+public class Table extends BaseEntity {
 
     @NotNull
     private String name;

@@ -1,8 +1,7 @@
 package com.quarkus.smartbackoffice.controllers;
 
 import com.quarkus.smartbackoffice.persistence.entity.Category;
-import com.quarkus.smartbackoffice.provider.models.CategoryDto;
-import com.quarkus.smartbackoffice.services.CategoryService;
+import com.quarkus.smartbackoffice.persistence.repository.CategoryRepository;
 import io.quarkus.test.InjectMock;
 import io.quarkus.test.junit.QuarkusTest;
 import lombok.val;
@@ -19,13 +18,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class CategoryControllerTest {
 
     @InjectMock
-    CategoryService categoryServiceMock;
+    CategoryRepository categoryRepositoryMock;
 
     @BeforeEach
     void setup() {
-        val category = CategoryDto.builder().name("drinks-test").build();
-        Mockito.when(categoryServiceMock.allCategories())
-                .thenReturn(List.of(category));
+        val category = Category.builder().name("drinks-test").build();
+        Mockito.when(categoryRepositoryMock.listAll()).thenReturn(List.of(category));
     }
 
     @Test

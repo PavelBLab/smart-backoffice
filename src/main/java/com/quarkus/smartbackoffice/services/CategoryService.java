@@ -1,9 +1,12 @@
 package com.quarkus.smartbackoffice.services;
 
+import com.quarkus.smartbackoffice.exceptions.ResourceNotFoundException;
 import com.quarkus.smartbackoffice.mappers.CategoryMapper;
 import com.quarkus.smartbackoffice.persistence.repository.CategoryRepository;
 import com.quarkus.smartbackoffice.provider.models.CategoryDto;
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.transaction.Transactional;
+import jakarta.ws.rs.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.val;
 
@@ -13,26 +16,37 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CategoryService {
 
-    private final CategoryRepository CategoryRepository;
-    private final CategoryMapper CategoryMapper;
+    private final CategoryRepository categoryRepository;
+    private final CategoryMapper categoryMapper;
 
     public List<CategoryDto> allCategories() {
-        return CategoryMapper.mapToCategoryDtos(CategoryRepository.listAll());
+        return categoryMapper.mapToCategoryDtos(categoryRepository.listAll());
     }
 
-    public CategoryDto oneCategory(final Long CategoryId) {
-        val Category = CategoryRepository.getById(CategoryId);
+    public CategoryDto oneCategory(final Long categoryId) {
+        val category = categoryRepository.findByIdOptional(categoryId);
 
-        if (Category.isPresent()) {
-            return CategoryMapper.mapToCategoryDto(Category.get());
+        if (category.isPresent()) {
+            return categoryMapper.mapToCategoryDto(category.get());
         } else {
-            return CategoryDto.builder().build();
+            throw new ResourceNotFoundException("Category with categoryId: " + categoryId + " is not found");
         }
     }
 
-    public CategoryDto createCategory(final CategoryDto CategoryDto) {
-        val persistedCategory = CategoryRepository.persist(CategoryMapper.mapToCategory(CategoryDto));
-        return CategoryMapper.mapToCategoryDto(persistedCategory);
+    @Transactional
+    public CategoryDto createCategory(final CategoryDto categoryDto) {
+        categoryRepository.persist(categoryMapper.mapToCategory(categoryDto));
+        return categoryDto;
+    }
+
+
+    @Transactional
+    public void deleteCategory(final Long categoryId) {
+        val Category = categoryRepository.findByIdOptional(categoryId);
+        if (Category.isEmpty()) {
+            throw new NotFoundException("Category with categoryId: " + categoryId + " is not found");
+        }
+        categoryRepository.deleteById(categoryId);
     }
 
 }

@@ -1,6 +1,7 @@
 package com.quarkus.smartbackoffice.persistence.entity;
 
 
+import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import jakarta.persistence.*;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
@@ -20,7 +21,7 @@ import java.math.BigDecimal;
 @Table(name = "backoffice_articles", uniqueConstraints = {
         @UniqueConstraint(columnNames = {"name", "category_id"})
 })
-public class Article extends BaseEntity{
+public class Article extends BaseEntity {
 
     @NotNull
     private String name;

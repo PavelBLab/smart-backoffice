@@ -1,9 +1,12 @@
 package com.quarkus.smartbackoffice.services;
 
+import com.quarkus.smartbackoffice.exceptions.ResourceNotFoundException;
 import com.quarkus.smartbackoffice.mappers.TableMapper;
 import com.quarkus.smartbackoffice.persistence.repository.TableRepository;
 import com.quarkus.smartbackoffice.provider.models.TableDto;
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.transaction.Transactional;
+import jakarta.ws.rs.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.val;
 
@@ -21,18 +24,30 @@ public class TableService {
     }
 
     public TableDto oneTable(final Long tableId) {
-        val table = tableRepository.getById(tableId);
+        val table = tableRepository.findByIdOptional(tableId);
 
         if (table.isPresent()) {
             return tableMapper.mapToTableDto(table.get());
         } else {
-            return TableDto.builder().build();
+            throw new ResourceNotFoundException("Table with tableId: " + tableId + " is not found");
         }
     }
 
+    @Transactional
     public TableDto createTable(final TableDto tableDto) {
-        val persistedTable = tableRepository.persist(tableMapper.mapToTable(tableDto));
-        return tableMapper.mapToTableDto(persistedTable);
+        tableRepository.persist(tableMapper.mapToTable(tableDto));
+        return tableDto;
+    }
+
+
+    @Transactional
+    public void deleteTable(final Long tableId) {
+        val table = tableRepository.findByIdOptional(tableId);
+        if (table.isEmpty()) {
+            throw new NotFoundException("Table with tableId: " + tableId + " is not found");
+        }
+        tableRepository.deleteById(tableId);
     }
 
 }
+ 
