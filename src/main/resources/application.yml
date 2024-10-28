@@ -3,6 +3,9 @@ quarkus:
     auth:
       basic: true
 
+#  native:
+#    native-image-xmx: 8G # reserve a number of Gb for creating a native docker image
+
 logging:
   level:
     io.quarkus.hibernate.reactive: DEBUG
