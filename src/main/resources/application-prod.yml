@@ -2,9 +2,9 @@ quarkus:
   datasource:
     username: postgres
     password: postgres
-    jdbc:
-      url: jdbc:postgresql://localhost:5431/smartbar-backoffice
+    jdbc: # blocking
+      url: jdbc:postgresql://localhost:6000/smartbar-backoffice
+
   hibernate-orm:
     database:
       generation: drop-and-create
-

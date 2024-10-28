@@ -1,8 +1,8 @@
 package com.quarkus.smartbackoffice.services;
 
 import com.quarkus.smartbackoffice.exceptions.ResourceNotFoundException;
-import com.quarkus.smartbackoffice.mappers.ArticleMapper;
-import com.quarkus.smartbackoffice.persistence.repository.ArticleRepository;
+import com.quarkus.smartbackoffice.mappers.ArticleSynchronizedMapper;
+import com.quarkus.smartbackoffice.persistence.repository.ArticleSynchronizedRepository;
 import com.quarkus.smartbackoffice.provider.models.ArticleDto;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.transaction.Transactional;
@@ -14,20 +14,20 @@ import java.util.List;
 
 @ApplicationScoped
 @RequiredArgsConstructor
-public class ArticleService {
+public class ArticleSynchronizedService {
 
-    private final ArticleRepository articleRepository;
-    private final ArticleMapper articleMapper;
+    private final ArticleSynchronizedRepository articleSynchronizedRepository;
+    private final ArticleSynchronizedMapper articleSynchronizedMapper;
 
     public List<ArticleDto> allArticles() {
-        return articleMapper.mapToArticleDtos(articleRepository.listAll());
+        return articleSynchronizedMapper.mapToArticleDtos(articleSynchronizedRepository.listAll());
     }
 
     public ArticleDto oneArticle(final Long articleId) {
-        val article = articleRepository.findByIdOptional(articleId);
+        val article = articleSynchronizedRepository.findByIdOptional(articleId);
 
         if (article.isPresent()) {
-            return articleMapper.mapToArticleDto(article.get());
+            return articleSynchronizedMapper.mapToArticleDto(article.get());
         } else {
             throw new ResourceNotFoundException("Article with articleId: " + articleId + " is not found");
         }
@@ -35,18 +35,18 @@ public class ArticleService {
 
     @Transactional
     public ArticleDto createArticle(final ArticleDto articleDto) {
-        articleRepository.persist(articleMapper.mapToArticle(articleDto));
+        articleSynchronizedRepository.persist(articleSynchronizedMapper.mapToArticle(articleDto));
         return articleDto;
     }
 
 
     @Transactional
     public void deleteArticle(final Long articleId) {
-        val article = articleRepository.findByIdOptional(articleId);
+        val article = articleSynchronizedRepository.findByIdOptional(articleId);
         if (article.isEmpty()) {
             throw new NotFoundException("Article with articleId: " + articleId + " is not found");
         }
-        articleRepository.deleteById(articleId);
+        articleSynchronizedRepository.deleteById(articleId);
     }
 
 }

@@ -1,9 +1,8 @@
 package com.quarkus.smartbackoffice.persistence.entity;
 
 
-import io.quarkus.hibernate.orm.panache.PanacheEntity;
-import jakarta.persistence.*;
 import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;

@@ -7,7 +7,7 @@ import org.mapstruct.*;
 import java.util.List;
 
 @Mapper(componentModel = MappingConstants.ComponentModel.CDI)
-public interface ArticleMapper {
+public interface ArticleSynchronizedMapper {
 
     @IterableMapping(qualifiedByName = "mapToArticleDto")
     List<ArticleDto> mapToArticleDtos(final List<Article> articles);

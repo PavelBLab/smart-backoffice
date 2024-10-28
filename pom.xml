@@ -99,6 +99,7 @@
         </dependency>
 
         <!-- Database -->
+        <!-- Database: Blocking (synchronized) extensions -->
         <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-hibernate-orm</artifactId>
@@ -106,13 +107,30 @@
 
         <dependency>
             <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-jdbc-postgresql</artifactId>
+            <artifactId>quarkus-hibernate-orm-panache</artifactId>
         </dependency>
 
         <dependency>
             <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-hibernate-orm-panache</artifactId>
+            <artifactId>quarkus-jdbc-postgresql</artifactId>
         </dependency>
+
+        <!-- Database: Non-blocking (non-synchronized) extensions -->
+<!--        <dependency>-->
+<!--            <groupId>io.quarkus</groupId>-->
+<!--            <artifactId>quarkus-hibernate-reactive</artifactId>-->
+<!--        </dependency>-->
+
+<!--        <dependency>-->
+<!--            <groupId>io.quarkus</groupId>-->
+<!--            <artifactId>quarkus-reactive-pg-client</artifactId>-->
+<!--        </dependency>-->
+
+<!--        <dependency>-->
+<!--            <groupId>io.quarkus</groupId>-->
+<!--            <artifactId>quarkus-hibernate-reactive-panache</artifactId>-->
+<!--        </dependency>-->
+
 
         <!-- Testing -->
         <dependency>

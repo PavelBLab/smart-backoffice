@@ -3,6 +3,8 @@ package com.quarkus.smartbackoffice.controllers;
 import com.quarkus.smartbackoffice.provider.controllers.CategoriesApi;
 import com.quarkus.smartbackoffice.provider.models.CategoryDto;
 import com.quarkus.smartbackoffice.services.CategoryService;
+import io.smallrye.common.annotation.Blocking;
+import io.smallrye.common.annotation.NonBlocking;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.core.Response;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +16,7 @@ import java.net.URI;
 import java.util.List;
 
 @RequiredArgsConstructor
-//@NonBlocking
+@Blocking
 @Slf4j
 @Path("/categories")
 @Tag(name = "Categories", description = "Endpoints related to managing categories")

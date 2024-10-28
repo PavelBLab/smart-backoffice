@@ -2,7 +2,9 @@ package com.quarkus.smartbackoffice.controllers;
 
 import com.quarkus.smartbackoffice.provider.controllers.ArticlesApi;
 import com.quarkus.smartbackoffice.provider.models.ArticleDto;
-import com.quarkus.smartbackoffice.services.ArticleService;
+import com.quarkus.smartbackoffice.services.ArticleSynchronizedService;
+import io.smallrye.common.annotation.Blocking;
+import io.smallrye.common.annotation.NonBlocking;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.core.Response;
 import lombok.RequiredArgsConstructor;
@@ -13,31 +15,36 @@ import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 import java.net.URI;
 import java.util.List;
 
+
+/**
+ * Response object in the methods is for blocking (synchronized) operations
+ * Uni object in the methods is for non-blocking (noo-synchronized) operations
+ */
 @Slf4j
 @RequiredArgsConstructor
-//@NonBlocking
+@Blocking
 @Path("/articles")
 @Tag(name = "Articles", description = "Endpoints related to managing articles")
 public class ArticleController implements ArticlesApi {
 
-    private final ArticleService articleService;
+    private final ArticleSynchronizedService articleSynchronizedService;
 
     @Override
     public Response allArticles() {
         log.info("Returns all articles");
-        return Response.ok(List.of(articleService.allArticles())).build();
+        return Response.ok(List.of(articleSynchronizedService.allArticles())).build();
     }
 
     @Override
     public Response oneArticle(final Long articleId) {
-        val article = articleService.oneArticle(articleId);
+        val article = articleSynchronizedService.oneArticle(articleId);
         log.info("Returns a article with articleId: " + article.getId());
         return Response.ok(article).build();
     }
 
     @Override
     public Response createArticle(final Long xCategoryId, final ArticleDto articleDto) {
-        val persistedArticle = articleService.createArticle(articleDto);
+        val persistedArticle = articleSynchronizedService.createArticle(articleDto);
         log.info("Creates a article with name: " + articleDto.getName());
         return Response.created(URI.create("/articles/" + persistedArticle.getId())).build();
     }
@@ -49,7 +56,7 @@ public class ArticleController implements ArticlesApi {
 
     @Override
     public Response deleteArticle(final Long articleId) {
-        articleService.deleteArticle(articleId);
+        articleSynchronizedService.deleteArticle(articleId);
         log.info("Deletes a article with articleId: " + articleId);
         return Response.noContent().build();
     }

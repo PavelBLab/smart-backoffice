@@ -2,15 +2,25 @@ quarkus:
   http:
     port: 7777
 
+  smallrye-openapi:
+    enable: true
+
   datasource:
+    db-kind: postgresql
     username: postgres
     password: postgres
-    jdbc:
-       url: jdbc:postgresql://localhost:5431/smartbar-backoffice
+    jdbc: # blocking
+      url: jdbc:postgresql://localhost:5431/smartbar-backoffice
+    reactive: # non-blocking (non-synchronized)
+      url: vertx-reactive:postgresql://localhost:5431/smartbar-backoffice
 
   hibernate-orm:
+    # dialect: org.hibernate.dialect.PostgreSQLDialect
+    packages: com.quarkus.smartbackoffice.persistence.entity
     database:
       generation: drop-and-create
 
-  smallrye-openapi:
-    enable: true
+    "conn":
+      "default-reactive":
+        # Reactive configuration (default-reactive)
+        packages: com.quarkus.smartbackoffice.persistence.entity
