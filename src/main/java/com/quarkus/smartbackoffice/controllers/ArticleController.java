@@ -5,6 +5,7 @@ import com.quarkus.smartbackoffice.provider.models.ArticleDto;
 import com.quarkus.smartbackoffice.services.ArticleSynchronizedService;
 import io.smallrye.common.annotation.Blocking;
 import io.smallrye.common.annotation.NonBlocking;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.core.Response;
 import lombok.RequiredArgsConstructor;
@@ -21,10 +22,11 @@ import java.util.List;
  * Uni object in the methods is for non-blocking (noo-synchronized) operations
  */
 @Slf4j
-@RequiredArgsConstructor
 @Blocking
 @Path("/articles")
+@RequiredArgsConstructor
 @Tag(name = "Articles", description = "Endpoints related to managing articles")
+@RolesAllowed("admin")
 public class ArticleController implements ArticlesApi {
 
     private final ArticleSynchronizedService articleSynchronizedService;

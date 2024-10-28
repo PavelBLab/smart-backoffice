@@ -4,6 +4,7 @@ import com.quarkus.smartbackoffice.persistence.entity.Category;
 import com.quarkus.smartbackoffice.persistence.repository.CategoryRepository;
 import io.quarkus.test.InjectMock;
 import io.quarkus.test.junit.QuarkusTest;
+import io.quarkus.test.security.TestSecurity;
 import lombok.val;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -27,6 +28,7 @@ class CategoryControllerTest {
     }
 
     @Test
+    @TestSecurity(authorizationEnabled = false, user = "bob", roles = {"admin"})
     void categoriesGet() {
         val response = given()
                 .when()

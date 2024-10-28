@@ -5,6 +5,7 @@ import com.quarkus.smartbackoffice.provider.models.CategoryDto;
 import com.quarkus.smartbackoffice.services.CategoryService;
 import io.smallrye.common.annotation.Blocking;
 import io.smallrye.common.annotation.NonBlocking;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.core.Response;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +21,7 @@ import java.util.List;
 @Slf4j
 @Path("/categories")
 @Tag(name = "Categories", description = "Endpoints related to managing categories")
+@RolesAllowed("admin")
 public class CategoryController implements CategoriesApi {
 
     private final CategoryService categoryService;

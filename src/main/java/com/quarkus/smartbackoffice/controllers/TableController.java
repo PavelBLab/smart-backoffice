@@ -5,6 +5,7 @@ import com.quarkus.smartbackoffice.provider.models.TableDto;
 import com.quarkus.smartbackoffice.services.TableService;
 import io.smallrye.common.annotation.Blocking;
 import io.smallrye.common.annotation.NonBlocking;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.core.Response;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +21,7 @@ import java.util.List;
 @Blocking
 @Path("/tables")
 @Tag(name = "Tables", description = "Endpoints related to managing tables")
+@RolesAllowed("admin")
 public class TableController implements TablesApi {
 
     private final TableService tableService;

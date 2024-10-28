@@ -26,3 +26,7 @@ INSERT INTO backoffice_tables VALUES (true, 8, 3001, 'Stockholm');
 INSERT INTO backoffice_tables VALUES (true, 12, 3002, 'New York');
 INSERT INTO backoffice_tables VALUES (false, 4, 3003, 'Munich');
 INSERT INTO backoffice_tables VALUES (true, 6, 3004, 'Barcelona');
+
+-- Users
+INSERT INTO backoffice_users(id, username, password, role) VALUES (10000, 'bob', '$2y$10$iFKr4Ev412kfvh0VTrdmi.lDdtfZP17H94vRO/aID2yMTWKMglk6K', 'admin'); -- password is admin
+INSERT INTO backoffice_users(id, username, password, role) VALUES (10001, 'alice', '$2y$10$/2XvEq62kbYNjkz0/VjtYevf0j4Dy1.r5FocZjsya.aPnmI8b0DyW', 'user'); -- password is user
